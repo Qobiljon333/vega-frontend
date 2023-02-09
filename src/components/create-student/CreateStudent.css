@@ -1,0 +1,46 @@
+
+
+.Student_form{
+    border-radius: 7px;
+    padding: 10px 12px;
+    box-shadow: 0 0 8px #000;
+    display: block;
+    margin: auto;
+}
+.Student_form label{
+    margin-top: 30px;
+    opacity: 0.98;
+}
+.Student_form input{
+    outline: none;
+    border-bottom: 1px solid #000;
+    height: 30px;
+    transition: .08s;
+}
+.Student_form input:focus{
+    outline: none;
+    border-bottom: 2px solid green;
+    height: 35px;
+
+}
+
+
+
+
+
+.student_form_btn{
+    width: 45%;
+    padding: 12px 15px 12px ;
+    background: green;
+    border: none;
+    display: block;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 10%;
+  }
+  .student_form_btn span{
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 18px;
+  }

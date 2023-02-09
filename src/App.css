@@ -1,38 +1,57 @@
-.App {
-  text-align: center;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.box_shadow{
+  box-shadow: 0 0 10px #000;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.border_radius_50{
+  border: none;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.border_radius_4{
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.transition_3{
+  transition: .3s;
+}
+.border_bottom{
+    border-bottom: 2px solid black;
+    outline: none;
+}
+.border_bottom:focus{
+  border-bottom: 2px solid green;
+}
+.Add_lesson_form{
+  display: block;
+  margin: 25px auto;
+}
+.Add_lesson_form label{
+  margin-top: 28px;
+  margin-left: 3% ;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.borderB{
+  padding-bottom: 1px;
+  border-bottom: 2px solid white;
+  border-width: 0px;
+  transition: all;
 }
-
-.App-link {
-  color: #61dafb;
+.boderBF{
+  padding-bottom: 1px;
+  border-bottom: 2px solid white;
+  transition: all;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.transition_slow{
+  transition: .5s ease-in;
+}
+.transition_slow_delay{
+  transition-delay: 0.25s;
 }
