@@ -75,7 +75,7 @@ function App() {
             </PrivateAdmin>
           </Switch>
 
-          <Buttom />
+          {/* <Buttom /> */}
           <BottomController />
       </Router>
     </div>
