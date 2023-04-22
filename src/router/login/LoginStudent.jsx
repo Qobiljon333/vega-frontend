@@ -80,7 +80,8 @@ function LoginStudent() {
           <button disabled={loading} className={s.submit_btn}>{loading ? "Loading...": "Kirish"}</button>
         </form>
         <div className={s.border}></div>
-        <Link to='/' className={s.backhome_btn}>Asosiy sahifaga qaytish</Link>
+        <Link to='/create-student' className={s.backhome_btn}>Akkount yaratish</Link>
+        <Link to='/' className={`${s.backhome_btn} opacity-80`}>Asosiy sahifaga qaytish</Link>
       </div>
       <ToastContainer />
     </div>

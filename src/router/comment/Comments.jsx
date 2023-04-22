@@ -12,14 +12,14 @@ const Comments = ({comments, createLoading , setCreateLoading ,singleLesson,id})
     const teacher = useSelector(j => j.teacher)
     const student = useSelector(j => j.student)
     let name = "someone"
-    if( admin !== undefined && admin !== null){
+    if( admin !== null){
         name = admin.username
-    } else if ( teacher !== undefined && teacher !== null){
-        name = teacher.username
-    } else if ( student !== undefined && student !== null){
-        name = student.username
-    }else{
-        name = "someone"
+    } 
+    if( teacher !== null){
+        name = teacher.userName
+    } 
+    if(  student !== null){
+        name = student.userName
     }
 
     const [commentsState,setCommentsState] = useState(false)
@@ -63,7 +63,7 @@ const Comments = ({comments, createLoading , setCreateLoading ,singleLesson,id})
             })
     }
   return (
-    <div className='w-[100%] bg-slate-50  my-5'>
+    <div className='w-[100%] bg-slate-50 mb-10 my-5'>
         <div onClick={()=> setCommentsState(j => !j) } className="w-[100%]   flex items-center justify-between h-[35px] bg-slate-800 px-2 pr-5">
           <h1 className='text-slate-50 text-lg'>Izohlar : <span>{singleLesson.data[0]?.comments.length}</span></h1>
           <CgArrowDownR className={`text-white transition-all ${commentsState ? "rotate-180":"rotate-0"}`} />

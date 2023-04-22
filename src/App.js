@@ -22,7 +22,6 @@ import Admin from "./router/admin/Admin"
 import Teacher from './router/teacher/Teacher';
 import Student from './router/student/Student'
 import LessonsWrapper from './components/edit-lesson/LessonsWrapper';
-import AddLesson from './components/edit-lesson/AddLesson';
 import StudentSingleP from './router/single-pages/students-single-page/StudentSingleP';
 import LessonSingleP from './router/single-pages/Lessons-single-page/LessonSingleP';
 import SeeMoreLessons from './router/see-more/SeeMoreLessons';
@@ -32,6 +31,10 @@ import AddAnnouncement from './components/announcement/AddAnnouncement';
 import Find from './components/find/Find';
 import BottomController from './components/bottom-controller/BottomController';
 import LoginsContainer from './router/login/LoginsContainer';
+import LessonsLearning from './components/lessons-learning/LessonsLearning';
+import AddThemeWeb from './components/edit-lesson/AddThemeWeb';
+import ThemaSingleP from './router/single-pages/thema-single/ThemaSingleP';
+import SeeMoreStudents from './router/see-more/SeeMoreStudents';
 
 function App() {
   return (
@@ -50,16 +53,20 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/all-lessons" component={SeeMoreLessons} />
             <Route exact path="/all-teachers" component={SeeMoreTeachers} />
+            <Route exact path="/all-students" component={SeeMoreStudents} />
             <Route exact path="/login-container" component={LoginsContainer} />
             <Route exact path="/create-student" component={CreateStudent} />
             <Route exact path="/login-student" component={LoginStudent} />
             <Route exact path="/login-teacher" component={LoginTeacher} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/lessons-learning" component={LessonsLearning} />
             <Route path="/find" component={Find} />
+
             
-            <Route exact path="/teacher/add-lesson/:id" component={AddLesson} />
+            <Route exact path="/teacher/add-web-theme/:id" component={AddThemeWeb} />
             <Route exact path="/student-single-page/:id" component={StudentSingleP} />
             <Route exact path="/lesson-single-page/:id" component={LessonSingleP} />
+            <Route exact path="/theme-single-page/:id" component={ThemaSingleP} />
             <Route exact path="/teacher-single-page/:id" component={TeacherSingleP} />
 
             {/* <Route exact path="/thema-single-page/:id" component={} /> */}

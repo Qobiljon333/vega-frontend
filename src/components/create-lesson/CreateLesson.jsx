@@ -14,7 +14,7 @@ import { BsFillTrashFill } from "react-icons/bs";
 
 
 
-function CreateLesson() {
+function CreateLesson({lessonsRefresh}) {
   // const { t } = useTranslation()
   document.title = "Darslik yaratish";
   const teacher = useSelector(j => j.teacher)
@@ -24,6 +24,8 @@ function CreateLesson() {
   //  Get all teachers
   const [createLoading, setCreateLoading] = useState(false);
   const [data,setData ] = useState([])
+  const [options,setOptions] = useState([])
+  
   useEffect(() => {
     axios.get(`/`,)
         .then(res => {
@@ -33,25 +35,18 @@ function CreateLesson() {
         .catch(err => {
           console.log("Gett problem")
         })
+    axios.get("/subject")
+        .then(res => {
+          if (res.data.state) {
+            setOptions(res.data.data)
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
 }, [createLoading])
 
 
-/// delete teacher
-const deleteTeacher = (id) => {
-  if (window.confirm("Ishinchingiz komilmi?")) {
-    setCreateLoading(true);
-    axios
-      .delete(`/teacher/delete/${id}`, auth())
-      .then((res) => {
-        setCreateLoading(j => !j);
-        toast.success("Teacher is deleted", {
-          position: "top-right",
-          autoClose: 5000,
-        });
-      })
-      .catch((err) => console.log("Delete problem"));
-  }
-};
 
 
   const [inputTypeTextData] = useState([
@@ -197,6 +192,7 @@ const deleteTeacher = (id) => {
         setImgs([]);
         setIsLoading(false);
         setCreateLoading(j => !j);
+        lessonsRefresh(j => !j)
 
       })
       .catch(({ response: { data } }) => {
@@ -230,10 +226,12 @@ const deleteTeacher = (id) => {
           {/* typeTextInput */}
 
             <select onChange={handleChangeInput} value={allData["type"]} name="type" id="">
-              <option value="web-dasturlash">Web dasturlash</option>
-              <option value="matematika">Matematika</option>
-              <option value="kimyo">Kimyo</option>
-              <option value="tarix">Tarix</option>
+              <option value="">Tanlang</option>
+              {
+                options?.map((subject,inx) => (
+                  <option key={inx} value={subject.subject}> {subject.subject} </option>
+                ))
+              }
             </select>
           
           {/* inputTypeFile Images */}

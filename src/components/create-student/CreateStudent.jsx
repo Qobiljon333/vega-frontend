@@ -5,10 +5,11 @@ import { auth } from "../../auth/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../components/loader/Loader";
+import { useHistory } from "react-router-dom";
 
 const CreateStudent = () => {
   document.title = "Ro'yxatdan o'tish"
-
+  const history = useHistory()
   const [ studentState, setStudentState ] = useState({
     name:"",
     username:"",
@@ -40,6 +41,7 @@ const CreateStudent = () => {
               position: "top-right",
               autoClose: 5000,
             });
+            history.push("/login-student")
           } else{
             toast.error(data.msg, {
               position: "top-right",

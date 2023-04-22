@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { AiFillHome,AiOutlineSearch } from 'react-icons/ai'
 import { FaSearch } from 'react-icons/fa'
-import { MdAccountCircle } from 'react-icons/md'
+import { MdAccountCircle, MdPlayLesson } from 'react-icons/md'
 import { NavLink,useLocation,useHistory  } from 'react-router-dom'
 import { useSelector } from "react-redux";
 
@@ -49,16 +49,22 @@ const BottomController = () => {
 
  
   return (
-    <div className={`w-[100%] h-[55px] bg-slate-900  fixed left-0 bottom-0 md:hidden  `}>
+    <div className={`w-[100%] h-[40px] bg-slate-900  fixed left-0 bottom-0 md:hidden  `}>
         <div className={`controlls_nav relative w-[100%] h-[100%] flex items-center justify-between px-5 `}>
-            <NavLink to={`/`}>
-              <AiFillHome className='text-[30px] text-white' />
+            <NavLink onClick={()=> setModalState("")} to={`/`}>
+              <AiFillHome className='text-[23px] text-white' />
             </NavLink>
-            <NavLink to={`/find`}>
-              <FaSearch className='text-[31px]  text-white' />
+            <NavLink onClick={()=> setModalState("")} to={`/find`}>
+              <FaSearch className='text-[23px]  text-white' />
             </NavLink>
-            
-            <MdAccountCircle onClick={()=> toAccount()} className='text-[33px] text-white' />
+            {
+              student === null ? ""
+              :
+              <NavLink onClick={()=> setModalState("")} to={`/lessons-learning`}>
+               <MdPlayLesson className='text-[23px]  text-white' />
+              </NavLink>
+            }
+            <MdAccountCircle onClick={()=> toAccount()} className='text-[23px] text-white' />
 
         <div className={`absolute transition-all  ${modalState === "all" ? "top-[-143px] " : modalState === "" ? "top-[200px]" : "top-[-112px]" } w-[150px]  box_shadow right-1`}>
           { 

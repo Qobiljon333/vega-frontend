@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import { BsBookmarkPlusFill, BsFillBookmarkCheckFill } from 'react-icons/bs'
 import ReactPlayer from 'react-player'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -6,7 +7,7 @@ import axios from '../../../api/axios'
 import MainLoader from '../../../components/loader/MainLoader'
 import Comments from '../../comment/Comments'
 import ThemaSingleP from '../thema-single/ThemaSingleP'
-
+import loading from "../../../assets/Spinner-1s-200px.svg"
 
 
 const LessonSingleP = (
@@ -16,20 +17,9 @@ const LessonSingleP = (
         },
       }
 ) => {
-
   const [singleLesson,setSingleLesson] = useState([])
-
-  const [Thema,setThema ] = useState({
-    thema:"",
-    desc:"",
-    video:"",
-    task:"",
-    githubLink :"",
-
-
-  })
-  const [themaState,setThemaState] = useState(false)
-  // console.log(themaState );
+  const [themes,setThemes] = useState([])
+  const [themesState,setThemesState] = useState(false)
   const [commentsState,setCommentsState] = useState(false)
   const [createLoading, setCreateLoading] = useState(false);
 
@@ -37,12 +27,22 @@ const LessonSingleP = (
     axios.get(`/lesson/single-lesson/${id}`)
             .then(res => {
                 setSingleLesson(res.data)
+                axios.get(`/theme/special/${id}`)
+                  .then(res => {
+                      setThemesState(true)
+                      setThemes(res.data.data)
+                  })
+                  .catch(err => {
+                    console.log(err);
+                    setThemes(res.data.data)
+
+                  })
                 // console.log(res.data)
             })
             .catch(err => {
                 console.log(err);
             })
-  },[createLoading])
+  },[createLoading,id ])
 
   // learn
 
@@ -51,10 +51,9 @@ const LessonSingleP = (
   const studentLoc= useSelector(j => j.student)
   const [learnState, setLearnState] = useState(false)
   const [refresh,setRefresh] = useState(false)
-  console.log(learnState,"learn state");
 
   const [Student,setStudent] = useState(null)
-  console.log(Student," failk adla wdoiawkld awk");
+  // console.log(Student," failk adla wdoiawkld awk");
     useEffect(()=> {
       if (studentLoc != null) {
         axios.get(`/student/${studentLoc.id}`)
@@ -81,15 +80,42 @@ const LessonSingleP = (
     
    } else{
     console.log("ok");
-    axios.patch(`/student/add-mainLesson/${Student._id}`,{mainLesson:id})
+    axios.patch(`/student/add-mainLesson/${Student._id}`,{mainLesson:id,themes,teacher:singleLesson.data[0]?.owner })
       .then(res => {
         console.log( res);
         // window.location.reload(true)   refresh berish
         setRefresh(j => !j)
+        // add overallLessons
+      
       })
       .catch(err => {
         console.log( err);
       })
+    // axios.patch("/student/add-overall-lesson",{studentsId:[Student._id],themes})
+    //       .then(res => {
+    //         console.log(res);
+    //       })
+    //       .catch(err => {
+    //         console.log(err);
+    //       })
+    axios.patch(`/lesson/learner/${id}`,{student:Student._id})
+      .then(res => {
+        console.log(res,"student added"); 
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+      axios.patch(`/teacher/add-student/${singleLesson.data[0]?.owner}`,{student:Student._id})
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+     
+      
+      
    }
 
   } 
@@ -98,9 +124,8 @@ const LessonSingleP = (
     singleLesson.state ?
     
     <div className={`w-[100%]  relative `}>
-        <ThemaSingleP themaState={themaState}  setThemaState={setThemaState} Thema={Thema} />
 
-    <div  className={` overflow-hidden  ${themaState? "h-0": "h-auto"} `}>
+    <div  className={` overflow-hidden  `}>
 
       <div className="Cart lg:flex">
         <div className="img lg:w-[50%] lg:h-[350px]  flex items-center justify-center ">
@@ -114,12 +139,12 @@ const LessonSingleP = (
             <h1 className='max-w-[70%] pr-1'>Nomi: <span className='text-xl'>{singleLesson.data[0]?.title} bo'yicha dars</span></h1>
            
            
-            <div onClick={LearnBtn} className={`learn ${learnState? "bg-slate-600" :"bg-red-800"} text-white py-1 flex items-center justify-center hover:cursor-pointer h-[40px] w-[100px] mr-[3%] box_shadow `}>
+            <div onClick={LearnBtn} className={`learn ${learnState? "bg-slate-900" :"bg-red-800"} text-white py-1 flex items-center justify-center hover:cursor-pointer h-[60px] w-[60px] mr-[3%] box_shadow `}>
               {
                 learnState ? 
-                <h1 className='text-xl'>Unlearn</h1>
+                <h1 className='text-2xl'><BsFillBookmarkCheckFill /></h1>
                 :
-                <h1 className='text-xl'>Learn</h1>
+                <h1 className='text-2xl'> <BsBookmarkPlusFill /></h1>
 
               }
             </div>
@@ -129,28 +154,27 @@ const LessonSingleP = (
           <div className="">
             <h1>Kurs Turi: {singleLesson.data[0]?.type}</h1>
             <h1>Ustoz: {singleLesson.data[0]?.owner}</h1>
-            <h1>O'rganuvchilar: {singleLesson.data[0]?.students}</h1>
+            <h1>O'rganuvchilar: {singleLesson.data[0]?.students.length}</h1>
             <h1 className='opacity-100'>Malumot: <span>{singleLesson.data[0]?.desc}</span></h1>
           </div>
         </div>
       </div>
 
-      <div className="lessons my-10 mx-3 ">
+      <div className="lessons my-10 min-h-[350px] mx-3 ">
         {
-          singleLesson.data[0]?.lessons?.map((lesson,inx) => (
+          themes?.map((lesson,inx) => (
             <div onClick={()=> {
-              setThema(lesson)
-              setThemaState(true)
-            }} key={inx} className="lesson flex items-center justify-between my-4 h-[65px]">
-              <div className="lesson_video w-[25%] h-[65px] ">
-               <ReactPlayer width="100%" height="100%" className="object-cover"  light url={lesson? lesson.video :""} />
+              history.push(`/theme-single-page/${lesson._id}`)
+            }} key={inx} className="lesson border-b-2 border-slate-500 py-3  hover:cursor-pointer flex items-center justify-between my-4 h-[75px] lg:h-[180px] ">
+              <div className="lesson_video w-[25%] h-[75px] flex items-center justify-center lg:h-[180px] ">
+               <img className='w-[100%] h-[100%] object-contain ' src={lesson?.image} alt="Mavzu rasmi" />
               </div>
               <div className="w-[65%] h-[100%] overflow-hidden  px-2">
                 <h1 className='text-center '>
-                  {lesson? lesson.thema : ""}
+                  {lesson? lesson.theme : ""}
                 </h1>
               </div>
-              <div className="count w-[40px] h-[40px] flex items-center justify-center h- bg-red-800 ">
+              <div className="count w-[40px] h-[40px] flex items-center justify-center  bg-red-800 ">
                 <h1 className='text-white text-xl'>
                   {
                     inx + 1
@@ -159,6 +183,19 @@ const LessonSingleP = (
               </div>
             </div>
           ))
+        }
+        {
+          themes.length ? "" : <div className="">
+            {
+              themesState? 
+              <h1 className='text-xl' >Mavzular topilmadi🤷‍♂️</h1>
+              :
+              <div className=" flex items-center">
+                <h1 className='flex items-center mr-2'>Mavzular Yuklanmoqda... </h1>
+                <img className='w-[35px] h-[35px] ' src={loading} alt="" />
+              </div>
+            }
+          </div>
         }
       </div>
 

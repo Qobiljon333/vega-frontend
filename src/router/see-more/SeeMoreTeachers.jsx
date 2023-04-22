@@ -9,7 +9,6 @@ const SeeMoreTeachers = () => {
   const [data,setData] = useState([])
   const [teacherCount,setTCount] = useState(24)
   const [ loading,setLoading] = useState(false)
-  console.log("see-more-teachers");
   useEffect(()=>{
     setLoading(true)
     axios.get(`/teacher/see-more-teachers/${teacherCount}`)
@@ -22,7 +21,7 @@ const SeeMoreTeachers = () => {
 },[teacherCount])
   return (
     data.state ?
-   <div className="main py-5 bg-slate-50">
+   <div className="main py-5 ">
      <div className='flex flex-wrap  my-5' >
       {
         data.data?.map((teacher,inx) => (
@@ -47,7 +46,7 @@ const SeeMoreTeachers = () => {
    {
     teacherCount > data.data?.length ?
      <></> : 
-     <button className='block bg-white py-2 px-5  border-none rounded-md mx-auto' disabled={loading} onClick={() => setTCount(j => j * 2)} >
+     <button className='block bg-green-700  py-2 px-5  border-none rounded-md mx-auto' disabled={loading} onClick={() => setTCount(j => j * 2)} >
      {
        loading? (
          <Loader
@@ -55,7 +54,7 @@ const SeeMoreTeachers = () => {
        />
        ) : (
          <>
-           <span className=' text-black'>Ko'proq ko'rish . . .</span>
+           <span className=' text-white'>Ko'proq ko'rish . . .</span>
          </>
        )
      }

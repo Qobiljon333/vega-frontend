@@ -9,6 +9,49 @@ import CreateLesson from "../components/create-lesson/CreateLesson";
 import CreateTeacher from "../components/create-teacher/CreateTeacher";
 
 
+export const contentTypes = [
+  {
+    type:"story",
+    title:"",
+    desc:""
+  },
+  {
+    type:"videoContent",
+    title:"",
+    video:"",
+    desc:""
+  },
+  {
+    type:"imageContentL",
+    image:"",
+    title:"",
+    desc:""
+  },
+  {
+    type:"imageContentR",
+    title:"",
+    desc:"",
+    image:""
+  },
+  {
+    type:"glossary",
+    word:"",
+    desc:""
+  },
+ 
+  {
+    type:"dictionary",
+    word:"",
+    translation:"",
+    definition:"",
+    audio:""
+  },
+  {
+    type:"link",
+    title:"",
+    link:""
+  }
+]
 
 export const creationData = {
   type:[
@@ -17,6 +60,7 @@ export const creationData = {
     "Informatika"
   ]
 }
+
 
 
 

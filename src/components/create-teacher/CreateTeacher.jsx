@@ -17,18 +17,28 @@ function CreateTeacher() {
   document.title = "Teacher yaratish";
   const creator = useSelector(j => j.user)
   const creator_name = creator.username
-  console.log(creator_name);
+  // console.log(creator_name);
   //  Get all teachers
   const [createLoading, setCreateLoading] = useState(false);
   const [data,setData ] = useState([])
+  const [options,setOptions] = useState([])
   useEffect(() => {
     axios.get(`/teacher/all-teachers`, auth())
         .then(res => {
             setData(res.data);
-            console.log(res.data);
+            // console.log(res.data);
         })
         .catch(err => {
-          console.log("Gett problem")
+          console.log("Gett problem,",err)
+        })
+    axios.get("/subject")
+        .then(res => {
+          if (res.data.state) {
+            setOptions(res.data.data)
+          }
+        })
+        .catch(err => {
+          console.log(err);
         })
 }, [createLoading])
 
@@ -244,10 +254,12 @@ const deleteTeacher = (id) => {
           {/* typeTextInput */}
 
           <select onChange={handleChangeInput} value={allData["type"]} name="type" id="">
-              <option value="web-dasturlash">Web dasturlash</option>
-              <option value="matematika">Matematika</option>
-              <option value="kimyo">Kimyo</option>
-              <option value="tarix">Tarix</option>
+              <option value="">Tanlang</option>
+              {
+                options?.map((subject,inx) => (
+                  <option key={inx} value={subject.subject}> {subject.subject} </option>
+                ))
+              }
             </select>
         
 

@@ -4,7 +4,8 @@ import student from "../../../assets/student-icon.webp"
 import lessonsImg from "../../../assets/lessons.svg"
 import { NavLink } from 'react-router-dom'
 import axios from "../../../api/axios"
-const SpecialLessons = ({teacherName,state}) => {
+import {FiFilePlus} from "react-icons/fi"
+const SpecialLessons = ({teacherName,state,isLoading}) => {
   
   const [lessons,setlessons] = useState([])
   
@@ -18,7 +19,7 @@ const SpecialLessons = ({teacherName,state}) => {
       .catch(err => {
         console.log(err);
       })
-  },[teacherName])
+  },[teacherName,isLoading])
     
   return (
     lessons?.length === 0 ?
@@ -27,11 +28,12 @@ const SpecialLessons = ({teacherName,state}) => {
       </div>
     :
     <div className={`w-[100%]    ${state === "darsliklar" ? " h-auto  " :" h-0 overflow-hidden"}`}>
+        <h1 className='m-2'>Mavzu qo'shish uchun Darslikni tanlang</h1>
       <div className="w-[98%]  mx-auto flex flex-wrap content-between ">
         {
           lessons?.map((lesson,inx) => (
             <div key={inx} className="lesson pb-3 bg-white my-4  w-[47%] mx-auto md:w-[32%] lg:w-[22%]  ">
-              <NavLink   to={`/teacher/add-lesson/${lesson._id}`}>
+              <NavLink   to={`/teacher/add-web-theme/${lesson._id}`}>
               <div className="imgs w-[100%] h-[150px] relative ">
                 <img className=' w-[100%] h-[100%] object-cover ' src={lesson.urls[0]} alt="Darslik rasmi" />
                 <div className="absolute top-0 right-0 inline-block bg-red-800 py-[2px] px-[4px] ">
@@ -45,7 +47,7 @@ const SpecialLessons = ({teacherName,state}) => {
               </div> 
               <div className="info flex items-center justify-between px-2">
 
-                <div className="flex items-center justify-between ">
+                {/* <div className="flex items-center justify-between ">
                 <div className="flex items-center mr-1">
                   <h1 className='text-xs text-blue-700 mx-1'>{lesson.like}</h1>
                   <AiFillLike className='text-blue-700' />
@@ -54,12 +56,17 @@ const SpecialLessons = ({teacherName,state}) => {
                   <AiFillLike className='rotate-180 text-red-800 '  />
                   <h1 className='text-xs text-red-800  ml-1'>{lesson.disLike}</h1>
                 </div>
-                </div>
+                </div> */}
 
                 <div className="student flex items-center">
                   <img className='w-4 h-4 mr-1' src={student} alt="Student" />
-                  <h1>{lesson.students}</h1>
+                  <h1>{lesson.students.length}</h1>
                 </div>
+                
+                <div className="addTheme">
+                  <FiFilePlus />
+                </div>
+
                 <div className="student flex items-center ">
                   <img className='w-4 h-4 mr-1' src={lessonsImg} alt="Student" />
                   <h1>{lesson.lessons.length}</h1>

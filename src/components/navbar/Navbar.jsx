@@ -1,7 +1,9 @@
 import React,{useState,useEffect} from 'react'
+import { BsSearch } from 'react-icons/bs'
 import { MdAccountCircle } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
+import Search from '../find/Search'
 const Navbar = () => {
 
   const admin = useSelector(j=> j.user)
@@ -10,6 +12,7 @@ const Navbar = () => {
   const history = useHistory()
 
   const [modalState,setModalState] = useState("")
+  const [searchState,setSearchState] = useState(false)
   
   const toAccount = () => {
     if(admin !== null && teacher !== null && student !== null){
@@ -41,34 +44,47 @@ const Navbar = () => {
 
   const {pathname} = useLocation() 
   const [path,setPath] = useState(pathname)
-  console.log(pathname);
   if( pathname === "/login"  ){
     return <></>
 }
  
   return (
-    <div className=' w-[100%] px-11 h-9 bg-slate-900   items-center boderBF hidden lg:flex'>
+    <div className=' w-[100%] px-11 h-9 bg-slate-900   items-center boderBF hidden md:flex'>
         <NavLink to="/">
           <h1 className='text-white text-xl mx-5 font-serif'>Logo</h1>
         </NavLink>
-        <div className=" flex-1  ">
-           <div className="  items-center  flex">
+        <div className="  ">
+           <div className=" relative  items-center  flex">
               <div className='lg:ml-16 ' onClick={() => setPath("/all-lessons")}>
-                <NavLink to="/all-lessons">
+                <NavLink onClick={()=> setModalState("")}  to="/all-lessons">
                   <h1 className={`text-white lg:text-lg  ${path === "/all-lessons" ? "boderBF" :"borderB"}`}>Darsliklar</h1>
                 </NavLink> 
               </div>
               <div className='lg:mx-6 mx-5' onClick={() => setPath("/all-teachers")}>
-                <NavLink to="/all-teachers">
+                <NavLink onClick={()=> setModalState("")}  to="/all-teachers">
                   <h1 className={`text-white lg:text-lg  ${path === "/all-teachers" ? "boderBF" :"borderB"}`}>O'qituvchilar</h1>
                 </NavLink>
               </div>
-              <div className='lg:mx-6' onClick={() => setPath("/about")}>
-                <NavLink to="/about">
-                  <h1 className={`text-white lg:text-lg  ${path === "/about" ? "boderBF" :"borderB"}`}>Biz haqimizda</h1>
+              <div className='lg:mx-6' onClick={() => setPath("/all-students")}>
+                <NavLink onClick={()=> setModalState("")}  to="/all-students">
+                  <h1 className={`text-white lg:text-lg  ${path === "/all-students" ? "boderBF" :"borderB"}`}>O'rganuvchilar</h1>
                 </NavLink>
               </div>
            </div>
+
+        </div>
+        <div className={`search w-[100%]  z-50  top-0 left-0 my-1  ${ searchState ? "fixed" : "hidden" }`}>
+          <Search searchStateM={searchState} setSearchStateM={setSearchState} />
+         </div>
+
+        <div className="flex-1"></div>
+        
+        <div 
+          onClick={() => {
+            setSearchState(true)
+          }}
+        className=" mr-7 p-[.32rem] bg-slate-600   border-none rounded-full hover:cursor-pointer ">
+          <BsSearch  className='text-white' />
         </div>
 
         <div className=" relative">

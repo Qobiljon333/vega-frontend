@@ -45,9 +45,9 @@ const AddAnnouncement = ({id}) => {
     return (
     <div>
         <h1 className='text-center my-4 '>E'lon Qo'shish</h1>
-        <form onSubmit={submitNewAnnouncement} className="form_announcement my-3 pl-1">
+        <form onSubmit={submitNewAnnouncement} className="form_announcement my-3 pl-1 mt-10">
            
-        <label className='block mt-5 text-sm' htmlFor="date">E'lon kunini kiriting:</label>
+            <label className='block mt-5 text-sm' htmlFor="date">E'lon kunini kiriting:</label>
              <input  
               required
              className="w-[95%] h-[38px] outline-none border_bottom"

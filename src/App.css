@@ -7,6 +7,9 @@
 .box_shadow{
   box-shadow: 0 0 10px #000;
 }
+.box_shadow_2{
+  box-shadow: 0 0 2px #000;
+}
 
 .border_radius_50{
   border: none;
@@ -54,4 +57,10 @@
 }
 .transition_slow_delay{
   transition-delay: 0.25s;
+}
+.shadow_white{
+  box-shadow: 0 0 5px #fff;
+}
+.father:hover .child{
+  bottom: 0;
 }
